@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PU learning 初步 | 朝闻道</title>
-<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1620653444349">
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1620653624951">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="PU learning 初步 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
@@ -12,8 +12,7 @@
 
 
     <meta name="description" content="之前在LIC2020比赛中发现了PU learning的威力，这里借学习综述之际，重新梳理这一块的思路和概念。从我目前的业务出发，从问答场景中的拒识问题进行思考。
-原综述论文足足有近五十页，这里我们以核心理论为主进行介绍。后续
-定义 &am..." />
+原综述论文足足有近五十页，这里更多还是关注核心理论。后续补一篇博客介绍具体的..." />
     <meta name="keywords" content="semi-supervised learning,综述学习" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -23,7 +22,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://Jerryzhao-z.github.io">
-  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1620653444349" alt="">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1620653624951" alt="">
   </a>
   <h1 class="site-title">
     朝闻道
@@ -101,7 +100,7 @@
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>之前在LIC2020比赛中发现了PU learning的威力，这里借学习综述之际，重新梳理这一块的思路和概念。从我目前的业务出发，从问答场景中的拒识问题进行思考。<br>
-原综述论文足足有近五十页，这里我们以核心理论为主进行介绍。后续</p>
+原综述论文足足有近五十页，这里更多还是关注核心理论。后续补一篇博客介绍具体的方案。</p>
 <h2 id="定义-应用场景">定义 &amp; 应用场景</h2>
 <p>PU learning，即 learning from positive and unlabeled data，是一种针对<strong>只有正例和无标签</strong>数据的场景提出的机器学习研究方向。这与常见的机器学习设定有所不同，是一种典型的semi-supervised learning方法。<br>
 PU Learning的最终目标就是从这样一个数据设定下训练一个二分类模型，可以根据特征区分正样本和负样本。<br>
