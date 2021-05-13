@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-05-13T13:07:50.590Z</updated>
+    <updated>2021-05-13T13:08:23.011Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://Jerryzhao-z.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 朝闻道</rights>
     <entry>
-        <title type="html"><![CDATA[PU learning 初步(更新中)]]></title>
+        <title type="html"><![CDATA[PU learning 初步]]></title>
         <id>https://Jerryzhao-z.github.io/post/pu-learning-chu-bu/</id>
         <link href="https://Jerryzhao-z.github.io/post/pu-learning-chu-bu/">
         </link>
