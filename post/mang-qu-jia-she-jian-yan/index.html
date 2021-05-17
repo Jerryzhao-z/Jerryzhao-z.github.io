@@ -1,0 +1,232 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>盲区：假设检验 | 朝闻道</title>
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1621256519341">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="盲区：假设检验 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="数理统计一直是我的一个知识盲区，上次在读PU learning文章时就被G-test搞得头昏脑胀。此外，对于很多统计出身的学者而言，统计学毕竟是机器学习的源头之一，对于机器学习评估出的参数，可以从统计学角度进行验证，也就是做假设检验。
+其实..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Jerryzhao-z.github.io">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1621256519341" alt="">
+  </a>
+  <h1 class="site-title">
+    朝闻道
+  </h1>
+  <p class="site-description">
+    idea extraction
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              盲区：假设检验
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-05-17
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=967&amp;q=80" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>数理统计一直是我的一个知识盲区，上次在读PU learning文章时就被G-test搞得头昏脑胀。此外，对于很多统计出身的学者而言，统计学毕竟是机器学习的源头之一，对于机器学习评估出的参数，可以从统计学角度进行验证，也就是做假设检验。<br>
+其实日常读机器学习和深度学习相关论文时，做假设检验的工作并不多，大部分阅读到的深度学习论文，其实验部分都是由对比实验和消融实验组成。<br>
+查阅资料时读到了Zhihong Deng关于假设检验的文章，很受启发。希望能结合一些学界的进展继续延申一下。</p>
+<h2 id="what-why-how"><strong>What &amp; Why &amp; How</strong></h2>
+<p>假设检验(statistical hypothesis testing)是一种对参数假设的检查，结果是接受/拒接 参数假设。这里的<strong>参数</strong>一般由统计推断方法从样本数据中估算出来的，用于建模样本的真实分布。</p>
+<h3 id="如何分类假设与认知角度">如何分类：假设与认知角度</h3>
+<p>从认知角度，统计推断又分为频率学派和贝叶斯学派两种观点。</p>
+<ul>
+<li>频率学派认为随机变量背后存在着真实固定的分布，参数为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>θ</mi></mrow><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span>，样本是真实分布中采样获得(独立同分布)。我们的目标就是根据样本求取likelihood <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo>(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">L(\theta | x) = P(x|\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">L</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>，找到最可能复现采样结果的参数，完成对随机变量的建模。</li>
+<li>贝叶斯学派认为推断应该看作一个认知过程，参数是随着认知(采样)增加不断变化的，由观察到的采样数据来指导参数更新。一般我们会基于经验或者假设条件，针对参数提出先验分布<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>，进行后验推断计算参数概率<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>θ</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mi mathvariant="normal">∣</mi><mi>θ</mi><mo>)</mo><mi>P</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">P(\theta|x) = \frac{P(x|\theta)P(\theta)}{P(x)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">x</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">x</span><span class="mord mtight">∣</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="mclose mtight">)</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">θ</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+</ul>
+<p>我们常说的假设检验一般指频率学派定义的假设检验，而贝叶斯学派中定义的假设检验被百度百科称之为贝叶斯检验，再很多教材里被称之为贝叶斯假设检验。<br>
+<strong>下文中提到假设检验默认指频率学派定义下的检验假设。</strong></p>
+<p>统计推断这部分根据假设强弱一般可以分为参数模型和非参模型。</p>
+<ul>
+<li>参数模型假设真实分布形态属于某个已知分布族，只需要调整其分布的几个未知参数就可以拟合采样数据。</li>
+<li>非参模型的分布形式未知，也就无法确定具体需要多少参数描述分布。</li>
+</ul>
+<p>这样根据假设强弱，假设检验可以进一步分为参数假设检验和非参假设检验。</p>
+<h3 id="有什么作用分析视角和模型视角">有什么作用：分析视角和模型视角</h3>
+<p>如微调老师在知乎问题<a href="https://www.zhihu.com/question/55420602">为什么做机器学习的很少使用假设检验？</a>所写，假设检验在作为</p>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/108039322">薛定谔的假设检验——机器学习论文里到底要不要做检验？Zhihong Deng</a></li>
+</ul>
+<p>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/statistics?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#what-why-how"><strong>What &amp; Why &amp; How</strong></a>
+<ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%86%E7%B1%BB%E5%81%87%E8%AE%BE%E4%B8%8E%E8%AE%A4%E7%9F%A5%E8%A7%92%E5%BA%A6">如何分类：假设与认知角度</a></li>
+<li><a href="#%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E5%92%8C%E6%A8%A1%E5%9E%8B%E8%A7%86%E8%A7%92">有什么作用：分析视角和模型视角</a></li>
+</ul>
+</li>
+<li><a href="#references"><strong>References</strong></a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Jerryzhao-z.github.io/post/learning-to-rank/">
+              <h3 class="post-title">
+                Learning to Rank 方法演化
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'f34dd9ce32c07a84c208',
+    clientSecret: '5672be246c8bdd86839e62d0ba611a15e1f4c541',
+    repo: 'Jerryzhao-z.github.io',
+    owner: 'Jerryzhao-z',
+    admin: ['Jerryzhao-z'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Jerryzhao-z.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
