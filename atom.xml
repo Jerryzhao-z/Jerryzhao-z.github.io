@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-05-18T08:06:15.612Z</updated>
+    <updated>2021-05-18T08:07:03.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://Jerryzhao-z.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 朝闻道</rights>
     <entry>
-        <title type="html"><![CDATA[假设检验与PU learning]]></title>
+        <title type="html"><![CDATA[PU learning: 假设检验]]></title>
         <id>https://Jerryzhao-z.github.io/post/mang-qu-jia-she-jian-yan/</id>
         <link href="https://Jerryzhao-z.github.io/post/mang-qu-jia-she-jian-yan/">
         </link>
