@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-05-18T12:23:13.764Z</updated>
+    <updated>2021-05-19T11:03:05.175Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -82,29 +82,6 @@
 <li>Statistical Hypothesis Testing in Positive Unlabelled Data - Konstantinos Sechidis</li>
 </ul>
 <p>Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/statistics?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Learning to Rank 方法演化]]></title>
-        <id>https://Jerryzhao-z.github.io/post/learning-to-rank/</id>
-        <link href="https://Jerryzhao-z.github.io/post/learning-to-rank/">
-        </link>
-        <updated>2021-05-15T09:58:19.000Z</updated>
-        <content type="html"><![CDATA[<p>LTR已经是一个相当成熟的领域了，广泛应用于搜索和推荐系统中。其中偏重于计算性能的算法一般常用于初召阶段，而偏重于排序效果的算法常用于重排模块中。</p>
-<h2 id="需求"><strong>需求</strong></h2>
-<p>LTR最早是为了优化信息检索中的排序问题发展出来，一系列算法被提出处理网页/文档相关的排序，<br>
-比如BM25。</p>
-<h3 id=""></h3>
-<hr>
-<h2 id="方法"><strong>方法</strong></h2>
-<h3 id="ranknet2005">RankNet(2005)</h3>
-<h3 id="lambdarank2006">LambdaRank(2006)</h3>
-<h3 id="lambdamart2008">LambdaMart(2008)</h3>
-<h3 id="xgboost2016">Xgboost(2016)</h3>
-<h3 id="x-dart2017">X-Dart(2017)</h3>
-<h3 id="lambdaloss2018">LambdaLoss(2018)</h3>
-<h3 id="unbiased-lambdamart2018">Unbiased LambdaMart(2018)</h3>
-<p>Photo by <a href="https://unsplash.com/@joshgmit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Joshua Golde</a> on <a href="https://unsplash.com/s/photos/ranking?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
 ]]></content>
     </entry>
     <entry>
