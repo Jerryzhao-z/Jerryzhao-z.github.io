@@ -2,21 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>正是在下 | 朝闻道</title>
+<title>xgboost | 朝闻道</title>
 <link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1621505600530">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="正是在下 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="xgboost | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-Hi 很荣幸能与你交流
-
-你好，我是赵正锐，很荣幸能与你交流。
-我目前在追一科技上海研发中心担任NLP工程师，负责对话系统相关技术的研发和落地。
-艺术上，我喜欢绘画、唱歌，是个麦霸。运动方面，从小有游泳习惯，此外上学的时候跟着朋友们学会了..." />
+    <meta name="description" content="xgboost是陈天奇在14年起开源的一个gradient tree boosting算法库，至今在很多工业场景下都是最优方案。
+理论基础
+xgboost全名是Extreme Gradient Boosting, 相关论文是XGBoost:..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -79,11 +76,11 @@ Hi 很荣幸能与你交流
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              正是在下
+              xgboost
             </h2>
             <div class="post-info">
               <span>
-                2021-05-09
+                2021-05-20
               </span>
               <span>
                 2 min read
@@ -93,26 +90,74 @@ Hi 很荣幸能与你交流
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>Hi 很荣幸能与你交流</p>
-</blockquote>
-<p>你好，我是赵正锐，很荣幸能与你交流。<br>
-我目前在追一科技上海研发中心担任NLP工程师，负责对话系统相关技术的研发和落地。</p>
-<p>艺术上，我喜欢绘画、唱歌，是个麦霸。运动方面，从小有游泳习惯，此外上学的时候跟着朋友们学会了滑雪，上瘾。生活上，我是个温泉泡澡爱好者，泡过哈尔滨、志贺高原的温泉、还有上海各种汤。</p>
-<p>我之前很多次尝试写博客，都因为种种原因未能坚持。<br>
-这几年从事对话系统的研发，常常会阅读苏剑林的科学空间博文，后来他加入了追一，我们成为同事。<br>
-我的工作偏向业务，而苏神主要在做前沿算法的探索，工作中没有太多交集，只有在他分享时讨教两句。在阅读科学空间时，我常常能为与这样一个大神成为同事而暗暗高兴。<br>
-见贤思齐，希望能像他一样将自己的所学所思分享出来，成为一个知识和信息的生产者。</p>
-<p>如无特殊说明，博文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+                <p>xgboost是陈天奇在14年起开源的一个gradient tree boosting算法库，至今在很多工业场景下都是最优方案。</p>
+<h2 id="理论基础"><strong>理论基础</strong></h2>
+<p>xgboost全名是Extreme Gradient Boosting, 相关论文是XGBoost: A Scalable Tree Boosting System。从命名中就包含了以下几个递进的理论基础：</p>
+<ul>
+<li>boosting 一类串行集成学习算法</li>
+<li>gradient boosting 以梯度下降为优化方法的boosting算法</li>
+<li>decision tree 决策树是一种监督学习算法，通过输入特征从树根开始进行if/then判断分叉，到达叶节点获得模型输出。</li>
+<li>gradient tree boosting 以决策树为learner的gradient boosting算法</li>
+</ul>
+<h2 id="xgboost的优化"><strong>xgboost的优化</strong></h2>
+<p>xgboost在决策树构建、工程化两个方面做了优化：</p>
+<ul>
+<li>在决策树构建方面：
+<ul>
+<li>分裂点搜索
+<ul>
+<li>名为 weighted quantile sketch的近似算法</li>
+<li>针对稀疏特征的优化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>工程设计
+<ul>
+<li>特征统计阶段并行化</li>
+<li>CPU空间局部性优化</li>
+<li>IO优化</li>
+</ul>
+</li>
+</ul>
+<h2 id="dart"><strong>DART</strong></h2>
+<p>DART给gradient tree boosting引入了dropout机制。</p>
+<h2 id="lightgbm"><strong>LightGBM</strong></h2>
+<p>其实xgboost的训练速度已经很不错了，但是微软开源的gradient boosting库LightGBM，在训练速度和内存使用上做了优化，在一些公开数据集上能实现10倍以上的加速。</p>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li>XGBoost: A Scalable Tree Boosting System - Tianqi Chen</li>
+<li>DART: Dropouts meet Multiple Additive Regression Trees - K. V. Rashmi</li>
+</ul>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80"><strong>理论基础</strong></a></li>
+<li><a href="#xgboost%E7%9A%84%E4%BC%98%E5%8C%96"><strong>xgboost的优化</strong></a></li>
+<li><a href="#dart"><strong>DART</strong></a></li>
+<li><a href="#lightgbm"><strong>LightGBM</strong></a></li>
+<li><a href="#references"><strong>References</strong></a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Jerryzhao-z.github.io/post/mang-qu-jia-she-jian-yan/">
+              <h3 class="post-title">
+                PU learning: 假设检验
+              </h3>
+            </a>
+          </div>
         
 
         

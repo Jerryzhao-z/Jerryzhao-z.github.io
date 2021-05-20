@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-05-19T11:19:53.575Z</updated>
+    <updated>2021-05-20T13:48:32.504Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -10,6 +10,53 @@
     <logo>https://Jerryzhao-z.github.io/images/avatar.png</logo>
     <icon>https://Jerryzhao-z.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 朝闻道</rights>
+    <entry>
+        <title type="html"><![CDATA[xgboost]]></title>
+        <id>https://Jerryzhao-z.github.io/post/xgboost/</id>
+        <link href="https://Jerryzhao-z.github.io/post/xgboost/">
+        </link>
+        <updated>2021-05-20T07:53:35.000Z</updated>
+        <content type="html"><![CDATA[<p>xgboost是陈天奇在14年起开源的一个gradient tree boosting算法库，至今在很多工业场景下都是最优方案。</p>
+<h2 id="理论基础"><strong>理论基础</strong></h2>
+<p>xgboost全名是Extreme Gradient Boosting, 相关论文是XGBoost: A Scalable Tree Boosting System。从命名中就包含了以下几个递进的理论基础：</p>
+<ul>
+<li>boosting 一类串行集成学习算法</li>
+<li>gradient boosting 以梯度下降为优化方法的boosting算法</li>
+<li>decision tree 决策树是一种监督学习算法，通过输入特征从树根开始进行if/then判断分叉，到达叶节点获得模型输出。</li>
+<li>gradient tree boosting 以决策树为learner的gradient boosting算法</li>
+</ul>
+<h2 id="xgboost的优化"><strong>xgboost的优化</strong></h2>
+<p>xgboost在决策树构建、工程化两个方面做了优化：</p>
+<ul>
+<li>在决策树构建方面：
+<ul>
+<li>分裂点搜索
+<ul>
+<li>名为 weighted quantile sketch的近似算法</li>
+<li>针对稀疏特征的优化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>工程设计
+<ul>
+<li>特征统计阶段并行化</li>
+<li>CPU空间局部性优化</li>
+<li>IO优化</li>
+</ul>
+</li>
+</ul>
+<h2 id="dart"><strong>DART</strong></h2>
+<p>DART给gradient tree boosting引入了dropout机制。</p>
+<h2 id="lightgbm"><strong>LightGBM</strong></h2>
+<p>其实xgboost的训练速度已经很不错了，但是微软开源的gradient boosting库LightGBM，在训练速度和内存使用上做了优化，在一些公开数据集上能实现10倍以上的加速。</p>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li>XGBoost: A Scalable Tree Boosting System - Tianqi Chen</li>
+<li>DART: Dropouts meet Multiple Additive Regression Trees - K. V. Rashmi</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[PU learning: 假设检验]]></title>
         <id>https://Jerryzhao-z.github.io/post/mang-qu-jia-she-jian-yan/</id>
