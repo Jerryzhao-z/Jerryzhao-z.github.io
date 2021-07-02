@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>梯度下降优化算法 | 朝闻道</title>
-<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1625133713674">
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1625195190967">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="梯度下降优化算法 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
@@ -22,7 +22,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://Jerryzhao-z.github.io">
-  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1625133713674" alt="">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1625195190967" alt="">
   </a>
   <h1 class="site-title">
     朝闻道
@@ -100,7 +100,7 @@
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>实践中的梯度下降算法(Gradient Descent), 一般指Batch Gradient Descent, SGD两种.<br>
-在深度学习中，SGD是最简单常用的优化器，随着深度学习发展，针对SGD在learning rate的选择和控制方面的优化，以及深度学习理论的理解增强。其优化器变种层出不穷，有里程碑意义的包括 Momentum, AdaGrad, RMSprop, Adam. 以及Transformer训练中常用的AdamW. 这些最流行的优化器一般都是一阶优化器。实际上目前还有一些二阶优化器比如很多深度学习框架也可以支持，比如K-FAC。最近谷歌也放出来一篇在深度学习中使用二阶优化器的实验论文 <strong>Scalable Second Order Optimization for Deep Learning</strong>。</p>
+在深度学习中，SGD是最简单常用的优化器，随着深度学习发展，针对SGD在learning rate的选择和控制方面的优化，以及深度学习理论的理解增强。其优化器变种层出不穷，有里程碑意义的包括 Momentum, AdaGrad, RMSprop, Adam. 以及Transformer训练中常用的AdamW. 这些最流行的优化器一般都是一阶优化器。实际上目前还有一些二阶优化器比如很多深度学习框架也可以支持，比如K-FAC。去年谷歌也放出来一篇在深度学习中使用二阶优化器的实验论文 <strong>Scalable Second Order Optimization for Deep Learning</strong>。</p>
 <p>这篇博文结构如下，我们先回顾下深度学习优化算法的主要挑战，然后分别介绍下一阶和二阶优化器的研究进展。</p>
 <hr>
 <h2 id="优化器设计的挑战">优化器设计的挑战</h2>
