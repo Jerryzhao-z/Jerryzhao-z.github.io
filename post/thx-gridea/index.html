@@ -1,0 +1,194 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thx, Gridea | 朝闻道</title>
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1627264559145">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Thx, Gridea | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="感谢开发者海岛心Hey，Gridea的开发者，给开源社区贡献了一个如此完善、简介的静态博客client，这是我一直期待的产品。
+如果有幸能创作一些内容，都要感谢你，感谢Gridea
+😘
+Photo by Max Kukurudziak o..." />
+    <meta name="keywords" content="Gridea" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Jerryzhao-z.github.io">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1627264559145" alt="">
+  </a>
+  <h1 class="site-title">
+    朝闻道
+  </h1>
+  <p class="site-description">
+    idea extraction
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Thx, Gridea
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-05-07
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://Jerryzhao-z.github.io/tag/YnnzgBo5_/" class="post-tag">
+                  # Gridea
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://Jerryzhao-z.github.io/post-images/thx-gridea.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>感谢开发者海岛心Hey，Gridea的开发者，给开源社区贡献了一个如此完善、简介的静态博客client，这是我一直期待的产品。<br>
+如果有幸能创作一些内容，都要感谢你，感谢Gridea<br>
+😘</p>
+<p>Photo by <a href="https://unsplash.com/@maxkuk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Max Kukurudziak</a> on <a href="https://unsplash.com/s/photos/light?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'f34dd9ce32c07a84c208',
+    clientSecret: '5672be246c8bdd86839e62d0ba611a15e1f4c541',
+    repo: 'Jerryzhao-z.github.io',
+    owner: 'Jerryzhao-z',
+    admin: ['Jerryzhao-z'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Jerryzhao-z.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

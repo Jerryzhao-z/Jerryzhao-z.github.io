@@ -1,0 +1,293 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PU learning: Two-Step Techniques | 朝闻道</title>
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1627264559145">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="PU learning: Two-Step Techniques | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="之前的PU Learning初步中有介绍到，在满足可分假设和平滑假设时，Two-Step Techniques是优选且常用的方案。
+在Two-Step方案中一般会包含如下几个步骤：
+
+识别出可信的负样本
+使用监督或半监督技术使用正样本和可信..." />
+    <meta name="keywords" content="pu learning,semi-supervised learning,综述学习" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://Jerryzhao-z.github.io">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1627264559145" alt="">
+  </a>
+  <h1 class="site-title">
+    朝闻道
+  </h1>
+  <p class="site-description">
+    idea extraction
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              PU learning: Two-Step Techniques
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-05-14
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://Jerryzhao-z.github.io/tag/Ane4u3HQM/" class="post-tag">
+                  # pu learning
+                </a>
+              
+                <a href="https://Jerryzhao-z.github.io/tag/judORBPu6/" class="post-tag">
+                  # semi-supervised learning
+                </a>
+              
+                <a href="https://Jerryzhao-z.github.io/tag/mzlZFZDJs8/" class="post-tag">
+                  # 综述学习
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://images.unsplash.com/photo-1533937333975-80079d8558bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2689&amp;q=80" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>之前的PU Learning初步中有介绍到，在满足可分假设和平滑假设时，Two-Step Techniques是优选且常用的方案。</p>
+<p>在Two-Step方案中一般会包含如下几个步骤：</p>
+<ol>
+<li>识别出可信的负样本</li>
+<li>使用监督或半监督技术使用正样本和可信负样本进行训练</li>
+<li>（可选）选择步骤2中效果最好的模型</li>
+</ol>
+<p>综述中介绍方法是，常常使用比较传统的机器学习模型，比如朴素贝叶斯之类。在1202年深度学习继续称霸的今天，我觉得其中一些思想比具体的算法更有意义一些。</p>
+<hr>
+<h2 id="step1-识别可信负样本和正样本"><strong>Step1: 识别可信负样本（和正样本）</strong></h2>
+<p>负样本的采集在很多领域都是非常必要的。在facebook的负样本为王的论文中 强负样本的加入效果显著，是一个很值得关注的方向。这部分往往和向量/特征匹配，meta-learning相关度比较高。<br>
+此外，之前提到过的PU learning 初步中提到的biased learning也可以在这一步负责提供负样本，比如bagging SVM。</p>
+<h3 id="spy">Spy</h3>
+<p>将部分正样本加入到无标签数据中做间谍，把无标签数据作为负样本训练分类器，然后使用分类器对这部分间谍计算后验概率<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>y</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(y=1|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>, 使用最小的作为阈值，无标签数据中后验概率低于该阈值都被划分为可信负样本</p>
+<h3 id="rocchio">Rocchio</h3>
+<p>Rocchio是一个基于tf-idf特征的prototype based method，方法希望构建一个正样本的prototype和负样本的prototype，通过样本到正负样本prototype的距离远近来判断类型。此外后续还引入了K-means clustering等方法进行优化。但思路上和目前常用的prototype network很相似。</p>
+<h3 id="pgpu">PGPU</h3>
+<p>这个方案建立在probabilistic gap假设下，一般这种假设下，我们会训练关于标注的判别式模型估计<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>s</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(s=1|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span> 进而计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mover accent="true"><mi>P</mi><mo stretchy="true">~</mo></mover><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>P</mi><mo>(</mo><mi>s</mi><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo><mo>−</mo><mi>P</mi><mo>(</mo><mi>s</mi><mo>=</mo><mn>0</mn><mi mathvariant="normal">∣</mi><mi>x</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\Delta \widetilde{P}(x) = P(s=1|x) - P(s=0|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.19333em;vertical-align:-0.25em;"></span><span class="mord">Δ</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.94333em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span><span class="svg-align" style="width:calc(100% - 0.16668em);margin-left:0.16668em;top:-3.6833299999999998em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.26em;"><svg width='100%' height='0.26em' viewBox='0 0 600 260' preserveAspectRatio='none'><path d='M200 55.538c-77 0-168 73.953-177 73.953-3 0-7
+-2.175-9-5.437L2 97c-1-2-2-4-2-6 0-4 2-7 5-9l20-12C116 12 171 0 207 0c86 0
+ 114 68 191 68 78 0 168-68 177-68 4 0 7 2 9 5l12 19c1 2.175 2 4.35 2 6.525 0
+ 4.35-2 7.613-5 9.788l-19 13.05c-92 63.077-116.937 75.308-183 76.128
+-68.267.847-113-73.952-191-73.952z'/></svg></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mclose">)</span></span></span></span>来评估标注难度。<br>
+在标注数据上计算标注难度阈值，对于无标签数据中标注难度低于这个阈值的判断为负样本。</p>
+<h3 id="k-means">k-Means</h3>
+<p>使用K-means 聚类，其中聚类结果离正样本聚类结果最远的几个标记为负样本</p>
+<h3 id="knn">kNN</h3>
+<p>使用数据与最近k个标注数据的距离排序，排序结果中最远的那些被认为是可信负样本</p>
+<h3 id="c-crne">C-CRNE</h3>
+<p>全称叫Clustering-based method for Collecting Reliable Negative Examples，思路是先做全部数据的聚类，然后在聚类结果中找不包含正样本的cluster作为可信负样本</p>
+<h3 id="gpu">GPU</h3>
+<p>Generative Positive-Unlabeled，从标注数据中学一个生成模型。负样本是那些生成概率最低的无标签样本</p>
+<hr>
+<h2 id="step2-监督半监督学习"><strong>Step2: 监督/半监督学习</strong></h2>
+<p>如果Step1做的够好，这一步完全可以直接做监督学习就好了。有些半监督的方案会在这一步通过迭代训练模型，并在每代使用上一轮训练的分类器重新做可信负样本采集。</p>
+<h3 id="iterative-svm">Iterative SVM</h3>
+<p>使用正样本和可信负样本训练SVM分类器，然后使用分类器从无标签数据中预测出负样本，补充到前一轮的可信负样本中，为下一轮训练构造可信负样本。</p>
+<h3 id="dilca-knn">DILCA-kNN</h3>
+<p>使用正样本和可信负样本训练一个距离度量。对于每个无标签样本，使用kNN进行标注，根据距离正样本和可信负样本的平均距离判断样本类型。</p>
+<p>从综述的方法上看，这些方法和思路可以在深度学习的一些方案中找到表达能力更强的模型。</p>
+<hr>
+<h2 id="step3-模型选择"><strong>Step3: 模型选择</strong></h2>
+<p>一般基于半监督迭代的模型会涉及到模型选择的问题。<br>
+最常见的方式是默认保留最终模型，使用所有轮模型进行ensembling也是一种有效方法。<br>
+以上两种方法实际上规避了模型选择的问题。</p>
+<p>综述中提供了以下有几个指标，帮助我们进行模型的选择。</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>=</mo><mi>P</mi><mo>(</mo><msubsup><mi>y</mi><mi>i</mi><mo mathvariant="normal">′</mo></msubsup><mi mathvariant="normal">≠</mi><mi>y</mi><mo>)</mo><mo>−</mo><mi>P</mi><mo>(</mo><msubsup><mi>y</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><mo mathvariant="normal">′</mo></msubsup><mi mathvariant="normal">≠</mi><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\Delta E = P(y&#x27;_i \neq y ) - P(y&#x27;_{i-1} \neq y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.010556em;vertical-align:-0.258664em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.441336em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.258664em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0688870000000001em;vertical-align:-0.316995em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-2.441336em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.316995em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>：一旦标签数据的错误率上升，也就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>E</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\Delta E \gt 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.05764em;">E</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>, 停止训练，选择上一轮的模型。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>F</mi><mo>=</mo><mfrac><msub><mi>F</mi><mi>i</mi></msub><msub><mi>F</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mfrac></mrow><annotation encoding="application/x-tex">\Delta F = \frac{F_i}{F_{i-1}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.3751959999999999em;vertical-align:-0.486765em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8884309999999999em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32808571428571426em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.20252142857142857em;"><span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.4101em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3280857142857143em;"><span style="top:-2.357em;margin-left:-0.13889em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.143em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.486765em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>： 选择<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>F</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">F_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>提升的最后一轮，也就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>F</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\Delta F \gt 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord">Δ</span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. 之前有提到，在PU数据集中很难直接计算<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>F</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">F_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，可以使用其代理<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mo>(</mo><mi>P</mi><mo>(</mo><msup><mi>y</mi><mo mathvariant="normal">′</mo></msup><mo>=</mo><mn>1</mn><mi mathvariant="normal">∣</mi><mi>s</mi><mo>=</mo><mn>1</mn><mo>)</mo><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mi>P</mi><mo>(</mo><msup><mi>y</mi><mo mathvariant="normal">′</mo></msup><mo>=</mo><mn>1</mn><mo>)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{(P(y&#x27;=1|s=1))^2}{P(y&#x27;=1)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.62892em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.10892em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6828285714285715em;"><span style="top:-2.786em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mrel mtight">=</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mopen mtight">(</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8278285714285715em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mrel mtight">=</span><span class="mord mtight">1</span><span class="mord mtight">∣</span><span class="mord mathdefault mtight">s</span><span class="mrel mtight">=</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mclose mtight"><span class="mclose mtight">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8913142857142857em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>计算。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>F</mi><mi>N</mi><mi>R</mi><mo>&gt;</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">FNR \gt 0.05</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72243em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">F</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">0</span><span class="mord">5</span></span></span></span>：停止迭代直到某一轮模型对标签样本的识别错误率高于5%</li>
+</ul>
+<hr>
+<h2 id="思考"><strong>思考</strong></h2>
+<p>两步法就可分和光滑假设而言，在NLP和CV领域通过深度学习获得特征空间一般也是满足要求。此外，两步法框架很容易根据应用场景做组合，灵活性很强，也很容易引入深度学习来处理问题。这点也是两步法在PU learning中获得巨大成功的原因。</p>
+<hr>
+<h2 id="references"><strong>References</strong></h2>
+<ul>
+<li><strong>Learning From Positive and Unlabeled Data: A Survey</strong> Jessa Bekker · Jesse Davis</li>
+</ul>
+<p>Photo by <a href="https://unsplash.com/@viniciusamano?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Vinicius &quot;amnx&quot; Amano</a> on <a href="https://unsplash.com/s/photos/shadow-dark?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#step1-%E8%AF%86%E5%88%AB%E5%8F%AF%E4%BF%A1%E8%B4%9F%E6%A0%B7%E6%9C%AC%E5%92%8C%E6%AD%A3%E6%A0%B7%E6%9C%AC"><strong>Step1: 识别可信负样本（和正样本）</strong></a>
+<ul>
+<li><a href="#spy">Spy</a></li>
+<li><a href="#rocchio">Rocchio</a></li>
+<li><a href="#pgpu">PGPU</a></li>
+<li><a href="#k-means">k-Means</a></li>
+<li><a href="#knn">kNN</a></li>
+<li><a href="#c-crne">C-CRNE</a></li>
+<li><a href="#gpu">GPU</a></li>
+</ul>
+</li>
+<li><a href="#step2-%E7%9B%91%E7%9D%A3%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0"><strong>Step2: 监督/半监督学习</strong></a>
+<ul>
+<li><a href="#iterative-svm">Iterative SVM</a></li>
+<li><a href="#dilca-knn">DILCA-kNN</a></li>
+</ul>
+</li>
+<li><a href="#step3-%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><strong>Step3: 模型选择</strong></a></li>
+<li><a href="#%E6%80%9D%E8%80%83"><strong>思考</strong></a></li>
+<li><a href="#references"><strong>References</strong></a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://Jerryzhao-z.github.io/post/pu-learning-chu-bu/">
+              <h3 class="post-title">
+                PU learning: 初步
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'f34dd9ce32c07a84c208',
+    clientSecret: '5672be246c8bdd86839e62d0ba611a15e1f4c541',
+    repo: 'Jerryzhao-z.github.io',
+    owner: 'Jerryzhao-z',
+    admin: ['Jerryzhao-z'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://Jerryzhao-z.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
