@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>关于Vanilla Transformer的种种细节 | 朝闻道</title>
-<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1631462586822">
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1631462702115">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="关于Vanilla Transformer的种种细节 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
@@ -26,7 +26,7 @@ encoder由6个encoder layer构成，每个laye..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://Jerryzhao-z.github.io">
-  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1631462586822" alt="">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1631462702115" alt="">
   </a>
   <h1 class="site-title">
     朝闻道
@@ -247,7 +247,7 @@ c-8,0,-12,-0.7,-12,-2z M1001 80H400000v40H1014z'/></svg></span></span></span><sp
 <p><strong>Initializing the biases</strong>. It is possible and common to initialize the biases to be zero, since the asymmetry breaking is provided by the small random numbers in the weights. For ReLU non-linearities, some people like to use small constant value such as 0.01 for all biases because this ensures that all ReLU units fire in the beginning and therefore obtain and propagate some gradient. However, it is not clear if this provides a consistent improvement (in fact some results seem to indicate that this performs worse) and it is more common to simply use 0 bias initialization.<br>
 <strong>-- cs231n</strong></p>
 </blockquote>
-<p>此后，陆续有一些针对transformer参数初始化的新方案被提出来:</p>
+<p>此后，陆续有一些针对transformer参数初始化的新方案被提出来，以降低优化难度、简化网络结构：</p>
 <ul>
 <li><a href="https://openreview.net/pdf?id=SyeO5BBeUr">MetaInit (NIPS2019)</a></li>
 <li><a href="http://www.cs.toronto.edu/~mvolkovs/ICML2020_tfixup.pdf">T-Fixup (ICML2020)</a></li>
