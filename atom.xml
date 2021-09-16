@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-09-14T16:33:26.321Z</updated>
+    <updated>2021-09-16T14:23:24.609Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -91,8 +91,18 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 <h2 id="细节">细节</h2>
 <p>Vanilla Transformer的网络结构中很多细节在受关注后学界进行了分析实验，还有一些细节来自于此前的一些研究工作，这里整理一下。</p>
 <h3 id="token词表构建bpe-word-piece">token词表构建：bpe &amp; word-piece</h3>
-<p>https://arxiv.org/pdf/1508.07909.pdf<br>
-https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf</p>
+<p>vanilla Transformer在不同的翻译任务中使用了两种不同的subword算法: byte pair encoding 和 word-piece 算法。<br>
+bpe是一个串行算法，</p>
+<ol>
+<li>首先把语料中的词切为字母粒度，</li>
+<li>然后统计<strong>相邻</strong>子词一起出现的频率，</li>
+<li>选择<strong>频率最高子词</strong>对的加入词表，</li>
+<li>以此新词表更新语料分词结果</li>
+<li>迭代执行2-4步更新词表，直到达到目标词汇表规模。</li>
+</ol>
+<p>其论文中举例描述了算法，参考它的图例<br>
+<img src="https://Jerryzhao-z.github.io/post-images/1631800359525.jpg" alt="" width="492" height="704" loading="lazy"></p>
+<p>https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf</p>
 <h3 id="参数共享weight-tying">参数共享：Weight Tying</h3>
 <p>论文<a href="https://arxiv.org/pdf/1608.05859.pdf">Using the Output Embedding to Improve Language Models</a>验证了在翻译模型中，将embedding层和映射层进行参数共享，可以在降低模型参数量的同时，保持模型效果稳定。<br>
 在Transformer中，使用了weight typing的位置包括：</p>

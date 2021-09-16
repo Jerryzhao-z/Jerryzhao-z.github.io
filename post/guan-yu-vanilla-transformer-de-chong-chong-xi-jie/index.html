@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>关于Vanilla Transformer的种种细节 | 朝闻道</title>
-<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1631637203708">
+<link rel="shortcut icon" href="https://Jerryzhao-z.github.io/favicon.ico?v=1631802200460">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://Jerryzhao-z.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="关于Vanilla Transformer的种种细节 | 朝闻道 - Atom Feed" href="https://Jerryzhao-z.github.io/atom.xml">
@@ -26,7 +26,7 @@ encoder由6个encoder layer构成，每个laye..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://Jerryzhao-z.github.io">
-  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1631637203708" alt="">
+  <img class="avatar" src="https://Jerryzhao-z.github.io/images/avatar.png?v=1631802200460" alt="">
   </a>
   <h1 class="site-title">
     朝闻道
@@ -86,7 +86,7 @@ encoder由6个encoder layer构成，每个laye..." />
                 2021-06-30
               </span>
               <span>
-                12 min read
+                13 min read
               </span>
               
                 <a href="https://Jerryzhao-z.github.io/tag/hhNP5Db5d/" class="post-tag">
@@ -178,8 +178,18 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 <h2 id="细节">细节</h2>
 <p>Vanilla Transformer的网络结构中很多细节在受关注后学界进行了分析实验，还有一些细节来自于此前的一些研究工作，这里整理一下。</p>
 <h3 id="token词表构建bpe-word-piece">token词表构建：bpe &amp; word-piece</h3>
-<p>https://arxiv.org/pdf/1508.07909.pdf<br>
-https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf</p>
+<p>vanilla Transformer在不同的翻译任务中使用了两种不同的subword算法: byte pair encoding 和 word-piece 算法。<br>
+bpe是一个串行算法，</p>
+<ol>
+<li>首先把语料中的词切为字母粒度，</li>
+<li>然后统计<strong>相邻</strong>子词一起出现的频率，</li>
+<li>选择<strong>频率最高子词</strong>对的加入词表，</li>
+<li>以此新词表更新语料分词结果</li>
+<li>迭代执行2-4步更新词表，直到达到目标词汇表规模。</li>
+</ol>
+<p>其论文中举例描述了算法，参考它的图例<br>
+<img src="https://Jerryzhao-z.github.io/post-images/1631800359525.jpg" alt="" width="492" height="704" loading="lazy"></p>
+<p>https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf</p>
 <h3 id="参数共享weight-tying">参数共享：Weight Tying</h3>
 <p>论文<a href="https://arxiv.org/pdf/1608.05859.pdf">Using the Output Embedding to Improve Language Models</a>验证了在翻译模型中，将embedding层和映射层进行参数共享，可以在降低模型参数量的同时，保持模型效果稳定。<br>
 在Transformer中，使用了weight typing的位置包括：</p>
