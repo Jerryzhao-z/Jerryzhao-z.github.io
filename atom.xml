@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Jerryzhao-z.github.io</id>
     <title>朝闻道</title>
-    <updated>2021-09-16T14:23:24.609Z</updated>
+    <updated>2021-09-18T08:25:08.275Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Jerryzhao-z.github.io"/>
     <link rel="self" href="https://Jerryzhao-z.github.io/atom.xml"/>
@@ -102,7 +102,11 @@ bpe是一个串行算法，</p>
 </ol>
 <p>其论文中举例描述了算法，参考它的图例<br>
 <img src="https://Jerryzhao-z.github.io/post-images/1631800359525.jpg" alt="" width="492" height="704" loading="lazy"></p>
-<p>https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf</p>
+<p>在编码时，bpe首先把句子切分为字母粒度，然后从长到短遍历词表，将匹配到的相邻字母序列拼接为子词。<br>
+在huggingface的实现中，bpe会先把word切为character粒度子词，然后逐渐把在表格中的相邻子词两两拼接起来，直到相邻子词拼接后不在词表中。</p>
+<p>word-piece算法与bpe类似，区别在于step3，word-piece没有选择频率最大的相邻子词，而选择能使训练语料似然值上升最大的。<br>
+word-piece没有放出源码，在具体如何实现见仁见智。原文是用的是NGram统计语言模型做打分，而huggingface发布的tonkenizer中word-piece直接使用了bpe的训练方法。在<a href="https://zhuanlan.zhihu.com/p/191648421">这篇知乎文章</a>里，则基于独立假设将“求语料似然值提升最大相邻子词”转化为选择为相邻子词的互信息最大。</p>
+<p>在huggingface的实现中，word-piece的编码过程是一个贪婪算法，首先优先匹配整个词。如果找不到，则回退end指针，尝试匹配跟短的token，如此逐步将word拆分为多个子词。</p>
 <h3 id="参数共享weight-tying">参数共享：Weight Tying</h3>
 <p>论文<a href="https://arxiv.org/pdf/1608.05859.pdf">Using the Output Embedding to Improve Language Models</a>验证了在翻译模型中，将embedding层和映射层进行参数共享，可以在降低模型参数量的同时，保持模型效果稳定。<br>
 在Transformer中，使用了weight typing的位置包括：</p>
