@@ -1,0 +1,12 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+interface Props { post: Post; }
+const { post } = Astro.props;
+---
+<article class="post-card">
+  <div class="post-meta"><time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>{post.data.series && <span>{post.data.series}</span>}</div>
+  <h3><a href={`/post/${post.id}/`}>{post.data.title}</a></h3>
+  <p>{post.data.description}</p>
+  {post.data.tags.length > 0 && <ul class="tag-list" aria-label="记录标签">{post.data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+</article>

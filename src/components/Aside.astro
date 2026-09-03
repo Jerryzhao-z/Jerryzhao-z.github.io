@@ -1,0 +1,5 @@
+---
+interface Props { title?: string; }
+const { title = '旁注' } = Astro.props;
+---
+<aside class="content-aside"><strong>{title}</strong><div><slot /></div></aside>

@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts } from '../../lib/posts';
+const posts = await getPublishedPosts();
+---
+<BaseLayout title="文章" description="Jerry 的学习笔记、问题与随想。">
+  <section class="page-heading shell"><p class="eyebrow">Writing</p><h1>文章</h1><p>学习笔记、问题与随想，按时间排列。</p></section>
+  <section class="section shell">{posts.length > 0 ? <div class="post-list">{posts.map((post) => <PostCard post={post} />)}</div> : <div class="empty-state"><p>还没有公开记录。这里会在第一篇内容准备好后更新。</p></div>}</section>
+</BaseLayout>

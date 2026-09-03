@@ -1,0 +1,85 @@
+---
+import { geoCentroid, geoMercator, geoNaturalEarth1, geoPath } from 'd3-geo';
+import { feature } from 'topojson-client';
+import { Countries110m as worldTopology, Countries50m as detailedWorldTopology } from '@d3-maps/atlas/world/countries';
+import chinaTopology from '../data/china-provinces.json';
+
+const visitedCountries = new Map([
+  ['CHN', '中国'],
+  ['FRA', '法国'],
+  ['DEU', '德国'],
+  ['ESP', '西班牙'],
+  ['CHE', '瑞士'],
+  ['ITA', '意大利'],
+  ['JPN', '日本'],
+  ['SGP', '新加坡'],
+]);
+
+const visitedProvinces = new Map([
+  ['110000', '北京'],
+  ['120000', '天津'],
+  ['310000', '上海'],
+  ['320000', '江苏'],
+  ['330000', '浙江'],
+  ['350000', '福建'],
+  ['360000', '江西'],
+  ['370000', '山东'],
+  ['430000', '湖南'],
+  ['440000', '广东'],
+  ['510000', '四川'],
+  ['530000', '云南'],
+  ['620000', '甘肃'],
+  ['630000', '青海'],
+  ['650000', '新疆'],
+  ['810000', '香港'],
+]);
+
+const world = feature(worldTopology as any, worldTopology.objects.features as any) as any;
+const worldProjection = geoNaturalEarth1().fitExtent([[8, 8], [952, 492]], world);
+const worldPath = geoPath(worldProjection).digits(1);
+const worldFeatures = world.features.filter((item: any) => item.properties.id !== 'ATA');
+const detailedWorld = feature(detailedWorldTopology as any, detailedWorldTopology.objects.features as any) as any;
+const smallCountryMarkers = ['CHE', 'SGP'].map((id) => {
+  const item = detailedWorld.features.find((country: any) => country.properties.id === id);
+  const point = item ? worldProjection(geoCentroid(item)) : null;
+  return { id, name: visitedCountries.get(id), point };
+}).filter((item) => item.point);
+
+const china = feature(chinaTopology as any, (chinaTopology as any).objects.provinces) as any;
+const chinaProjection = geoMercator().fitExtent([[12, 12], [748, 548]], china);
+const chinaPath = geoPath(chinaProjection).digits(1);
+const hongKong = china.features.find((item: any) => item.properties.id === '810000');
+const hongKongPoint = hongKong ? chinaProjection(geoCentroid(hongKong)) : null;
+---
+
+<section class="map-block" aria-labelledby="world-map-heading">
+  <div class="map-heading"><div><p class="eyebrow">World</p><h2 id="world-map-heading">去过的国家和地区</h2></div><p>8</p></div>
+  <svg class="travel-map world-map" viewBox="0 0 960 500" role="img" aria-labelledby="world-map-title world-map-desc">
+    <title id="world-map-title">Jerry 的世界足迹</title>
+    <desc id="world-map-desc">点亮中国、法国、德国、西班牙、瑞士、意大利、日本和新加坡。</desc>
+    {worldFeatures.map((item: any) => {
+      const id = item.properties.id;
+      const visited = visitedCountries.has(id);
+      return <path class:list={['map-region', { visited }]} d={worldPath(item) ?? ''}><title>{visited ? visitedCountries.get(id) : item.properties.name}</title></path>;
+    })}
+    {smallCountryMarkers.map(({ name, point }) => point && <circle class="map-marker" cx={point[0]} cy={point[1]} r="4"><title>{name}</title></circle>)}
+  </svg>
+  <ul class="place-list" aria-label="去过的国家和地区">{[...visitedCountries.values()].map((name) => <li>{name}</li>)}</ul>
+</section>
+
+<section class="map-block" aria-labelledby="china-map-heading">
+  <div class="map-heading"><div><p class="eyebrow">China</p><h2 id="china-map-heading">国内足迹</h2></div><p>16</p></div>
+  <svg class="travel-map china-map" viewBox="0 0 760 560" role="img" aria-labelledby="china-map-title china-map-desc">
+    <title id="china-map-title">Jerry 的国内足迹</title>
+    <desc id="china-map-desc">点亮北京、天津、上海、江苏、浙江、福建、江西、山东、湖南、广东、四川、云南、甘肃、青海、新疆和香港。</desc>
+    {china.features.map((item: any) => {
+      const id = item.properties.id;
+      const visited = visitedProvinces.has(id);
+      return <path class:list={['map-region', { visited }]} d={chinaPath(item) ?? ''}><title>{visited ? visitedProvinces.get(id) : item.properties['地名']}</title></path>;
+    })}
+    {hongKongPoint && <circle class="map-marker" cx={hongKongPoint[0]} cy={hongKongPoint[1]} r="4"><title>香港</title></circle>}
+  </svg>
+  <ul class="place-list" aria-label="去过的国内省级地区">{[...visitedProvinces.values()].map((name) => <li>{name}</li>)}</ul>
+</section>
+
+<p class="map-source">地图用于个人足迹示意。世界地图数据来自 <a href="https://www.naturalearthdata.com/" rel="noreferrer">Natural Earth</a>；国内地图数据来自 <a href="https://github.com/BarbarossaWang/cn-atlas" rel="noreferrer">cn-atlas</a>。</p>
