@@ -38,16 +38,12 @@ nav a:hover, nav a[aria-current="page"] { border-bottom-color: var(--ink); color
 .profile-copy { max-width: 710px; margin: 25px 0 0; color: #3f464c; font-size: 1.04rem; }
 .profile-links { display: flex; gap: 12px; margin: 23px 0 0; color: var(--muted); font-size: .92rem; }
 
-.home-grid { display: grid; grid-template-columns: minmax(0, 1fr) 235px; gap: 70px; align-items: start; padding-bottom: 90px; }
+.home-grid { padding-bottom: 90px; }
 .section { padding-block: 52px; }
 .section-heading { margin-bottom: 24px; }
-.section-heading h2, .current-notes h2, .timeline-section > h2 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; font-weight: 600; }
+.section-heading h2, .timeline-section > h2 { margin: 0; font-family: Georgia, "Noto Serif SC", serif; font-size: 1.35rem; font-weight: 600; }
 .text-link { font-size: .88rem; text-decoration: none; }
 .quiet-empty { margin: 0; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); }
-.current-notes { margin-top: 55px; padding-top: 17px; border-top: 2px solid var(--ink); }
-.current-notes h2 { font-size: 1.02rem; }
-.current-notes ul { margin: 15px 0 0; padding-left: 1.1rem; color: var(--muted); font-size: .9rem; }
-.current-notes li + li { margin-top: 7px; }
 
 .post-grid, .post-list { display: grid; gap: 0; }
 .post-card { padding: 22px 0 24px; border-top: 1px solid var(--line); }
@@ -131,9 +127,8 @@ nav a:hover, nav a[aria-current="page"] { border-bottom-color: var(--ink); color
   .profile-intro { padding-block: 54px 47px; }
   .profile-intro h1 { font-size: clamp(1.8rem, 8vw, 2.25rem); }
   .profile-copy { margin-top: 20px; }
-  .home-grid, .about-grid { grid-template-columns: 1fr; gap: 0; }
+  .about-grid { grid-template-columns: 1fr; gap: 0; }
   .home-grid { padding-bottom: 65px; }
-  .current-notes { margin-top: 0; }
   .about-grid { padding-block: 42px 50px; }
   .profile-summary { margin-top: 28px; }
   .timeline li { grid-template-columns: 58px 1fr; gap: 6px 15px; }
