@@ -141,13 +141,13 @@ $$\widetilde{\nabla} h = I_X^{-1}(\theta) \nabla h$$
 其中$h$是目标函数而$I_X(\theta)$是fisher information， 费雪信息这个概念可以参考另一篇博文**Short Introduction to Fisher Information**， 作为本文参考。
 
 基于费雪信息和自然梯度构建的自然梯度下降法$\widetilde{\nabla} h = I_X^{-1} \nabla h$中， 主要挑战是计算Fisher Information的逆矩阵。这里作者搭建了一个简单的神经网络阐述K-Fac的原理，其结构如下：
-![](/post-images/1623913199744.png)
+![用于说明 K-FAC 的简单神经网络结构](/post-images/1623913199744.png)
 K-Fac在Loss为Negative Log-likelihood的假设下，直接使用其Gradient计算Fisher Information，形为:
-![](/post-images/1623901653487.png)
+![使用梯度计算 Fisher Information Matrix 的公式](/post-images/1623901653487.png)
 每一个$W_i$表示i层的参数向量，Fisher Information被写为各层参数梯度两两相乘的积。
 各层参数在做反向传播时，某一层的参数梯度，一般通过上一层单位输出和反向传递函数输出的导数相乘得到： $DW_i = \frac{\partial L}{\partial W_i} = \frac{\partial L}{\partial S_i}\frac{\partial S_i}{\partial W_{i}} = g_i a_{i-1}^T$
 后续作者通过把向量外积推广为更广义的Kronecker积，对Fisher Information的计算进行了近似化简，构造为Khatri-Rao积的形式：
-![](/post-images/1623903275636.png)
+![K-FAC 对 Fisher Information Matrix 的 Kronecker 积近似](/post-images/1623903275636.png)
 中间近似相等这一步比较粗糙，但是实践效果还不错，所以被保留下来。
 这样，神经网络的Fisher Information Matrix可以由以上方法分层求解、按块构建出来。
 但在进行自然梯度下降时，近似估计Fisher Information Matrix的逆矩阵才是关键。在逆矩阵求解上作者考虑了两种近似方式：
@@ -168,7 +168,7 @@ Shampoo算法与AdaGrad紧密相关，这里的AdaGrad不是我们常用的版�
 
 相比full-matrix version of AdaGrad 保存一个巨大的$d \times d$大小的covariance矩阵，并针对其做幂运算和逆运算。Shampoo在每个参数的每个维度上单独计算preconditioner，大幅降低了存储和计算压力。
 
-![](/post-images/1624198803006.png)
+![Shampoo 优化器按张量维度构造预条件矩阵的示意图](/post-images/1624198803006.png)
 
 对于多维参数的gradient（k个维度），Shampoo给每一个维度都单独计算并缓存了一个可累计的Preconditioner $H_i$, dim=$(n_i, n_i)$。
 对待gradient的每个维度逐个计算：
@@ -194,7 +194,7 @@ Shampoo算法中涉及到对矩阵的负幂，论文中使用SVD分解在对角�
 
 这些优化加持下，Shampoo可以用于Bert-Large这种目前主流大模型的训练。收敛加快而每step的运算速度方面相比一阶算法也没有明显的劣势。下图，学者在使用Transformer model训练机器翻译模型过程中，Shampoo相比Adam、AdaGrad加速效果显著。
 
-![](/post-images/1624207875825.png)
+![Shampoo、Adam 与 AdaGrad 在机器翻译训练中的收敛速度对比](/post-images/1624207875825.png)
 
 ----
 
@@ -218,4 +218,3 @@ Shampoo算法中涉及到对矩阵的负幂，论文中使用SVD分解在对角�
 
 
 Photo by <a href="https://unsplash.com/@fr3nks?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Daniel Frank</a> on <a href="https://unsplash.com/s/photos/descent?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-

@@ -29,7 +29,7 @@ $$I_X(\theta) = - E_X(\frac{d^2}{d\theta^2}\log f(x|\theta)) = - \int_X \frac{d^
 
 二阶导在几何角度看描述了函数的弯曲程度，也就是函数在该点凸（二阶导大于等于0）和凹（二阶导小于等于0）的程度。这里也就是描述了log likelihood在局部最优的情况，越大说明在局部最优的弯曲程度大，置信区间越窄，数据越可信。
 
-![](/post-images/1623811443333.gif)
+![不同曲率下对数似然函数在最优点附近的变化动画](/post-images/1623811443333.gif)
 
 从这个角度再看上面的定义，所谓log likelihood梯度的方差，只有再弯曲程度越大的地方周围区域梯度会剧烈变化，方差很大。这个角度看，两个定义本质一致，平滑条件是为了满足任意阶可导。
 
@@ -88,4 +88,3 @@ $$\widetilde{\nabla} h = I_X^{-1} \nabla h$$
 
 
 Photo by <a href="https://unsplash.com/@nci?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">National Cancer Institute</a> on <a href="https://unsplash.com/s/photos/samples?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-

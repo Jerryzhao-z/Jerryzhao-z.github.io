@@ -108,7 +108,7 @@ G-test近似于卡方检验（自由度=$(|\mathcal{X}| - 1)(|\mathcal{Y}| - 1)$
 ### 检测效力
 在PU场景和SCAR假设下，当真实标签分布和样本特征分布不独立时，$I(X;Y) \gt I(X;S)$
 
-### 结合先验概率$P(y^+)$进行效力分析
+### 结合先验概率 $P(y^+)$ 进行效力分析
 G-test统计量之间存在如下关系:
 $$\lambda_{G(X;S)} = \kappa \lambda_{G(X;Y)} = \kappa 2 N I(X,Y)$$
 其中$\kappa = \frac{1 - P(y^+)}{P(y^+)} \frac{P(s^+)}{1 - P(s^+)} =  \frac{1 - P(y^+)}{P(y^+)} \frac{N_{s^+}}{N - N_{s^+}}$
@@ -133,4 +133,3 @@ PU场景中最常见的应用是在先验功效分析中判断采样集大小和
 
 
 Photo by <a href="https://unsplash.com/@chrisliverani?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chris Liverani</a> on <a href="https://unsplash.com/s/photos/statistics?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-

@@ -75,7 +75,7 @@ $$p_U(u) = \int_{-\infin}^{+\infin} p_{XY}(x(u,v), y(u,v)) \frac{\partial x}{\pa
 F分布是抽样三大分布之一。定义如下：
 设两个互相独立，且服从卡方分布的随机变量 $X_1 \sim \mathcal{X}^2(m), X_2 \sim \mathcal{X}^2(n)$，定义统计量$F=\frac{X_1/m}{X_2/n}$的分布为F分布，其中m为分子自由度，n为分母自由度。
 对于其概率密度函数，可以用增补变量法进行推导。
-### 导出$Z=\frac{X_1}{X_2}$
+### 导出 $Z=\frac{X_1}{X_2}$
 参考增补变量法，将u设定为此处的Z: 
 - $u=\frac{x_1}{x_2}, v=x_2$
 - 反函数$x_1=uv, x_2=v$
@@ -97,7 +97,7 @@ $$\Gamma(z) = \int_0^{\infin} t^{z-1}e^{-t}dt$$
 最终整理出以下表达式：
 $$p_Z(z) = p_U(u) = \frac{\Gamma(\frac{m+n}{2})}{\Gamma(m/2)\Gamma(n/2)}u^{\frac{m}{2}-1}(1+u)^{-\frac{m+n}{2}}$$
 
-### 导出$F=\frac{1/m}{1/n} Z$
+### 导出 $F=\frac{1/m}{1/n} Z$
 最后在这里的推导上，使用一维的变量变换法：
 > 关于连续随机变量X的函数$Y=g(X)$，且为严格单调函数（连续）
 > 其反函数$X=h(Y)$有连续导函数，则Y的概率密度函数为：
@@ -116,4 +116,3 @@ $$p_F(y) = p_Z(\frac{m}{n}y) \frac{m}{n} = \frac{\Gamma(\frac{m+n}{2})(m/n)^{m/2
 
 
 Photo by <a href="https://unsplash.com/@tvschaitanya?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Chaitanya Tvs</a> on <a href="https://unsplash.com/s/photos/circle?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-

@@ -3,10 +3,14 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import '../styles/global.css';
 import 'katex/dist/katex.min.css';
-interface Props { title?: string; description?: string; }
-const { title = 'Jerry', description = 'Jerry 的个人记录：好奇、学习、观察，以及还没有想明白的问题。' } = Astro.props;
+interface Props { title?: string; description?: string; canonicalPath?: string; }
+const {
+  title = 'Jerry',
+  description = 'Jerry 的个人记录：好奇、学习、观察，以及还没有想明白的问题。',
+  canonicalPath,
+} = Astro.props;
 const pageTitle = title === 'Jerry' ? title : `${title} · Jerry`;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, Astro.site ?? Astro.url);
 ---
 <!doctype html>
 <html lang="zh-CN">

@@ -71,7 +71,7 @@ draft: false
 - 近似抽样分布：寻找一种分布近似统计量$T(X_1, X_2...X_n)$的分布
 
 
-#### 样本均值$\bar{X}$的抽样分布 
+#### 样本均值 $\bar{X}$ 的抽样分布
 - 精确抽样分布：如果$X \sim N(\mu, \sigma^2)$，则$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
 - 渐近抽样分布：不确定总体是否遵循正态分布，但可以估算$E(X) = \mu$, $Var(X)=\sigma^2$, 则采样均值渐近分布为$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
 - 卡方分布：对于$X \stackrel{iid}{\sim} N(0,1), i=1,...n$，称随机变量$X = X_1^2+X_2^2...+X_n^2$ 的分布为自由度为n的卡方分布，标记为$\mathcal{X}^2(n)$
@@ -130,4 +130,3 @@ draft: false
 - [数理统计|笔记整理（3）——充分统计量 - 学弱猹](https://zhuanlan.zhihu.com/p/87520809)
 
 Photo by <a href="https://unsplash.com/@aloisk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Alois Komenda</a> on <a href="https://unsplash.com/s/photos/gamble?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-

@@ -37,14 +37,15 @@ PU Learning的最终目标就是从这样一个数据设定下训练一个二分
 在PU learning中，标注策略/机制是很重要的一个描述信息，决定了那些样本会被选中进行标注。
 上文符号列表中的$e(x)$倾向得分函数表示一个特征为x的正样本被选中标注的概率，而正样本被标注的比例为其期望 $c=E_x[e(x)] = P(s=1|y=1)$
 由此借助PU learning假设与贝叶斯公式可推得 
-$$ 
+$$
 f_l(x) = P(x|s=1) 
  = P(x|s=1, y=1)   
  = \frac{P(s=1|x, y=1)P(x|y=1)}{P(s=1|y=1)}  
- $$
- $$
- f_l(x) = \frac{e(x)f_+(x)}{c}
- $$
+$$
+
+$$
+f_l(x) = \frac{e(x)f_+(x)}{c}
+$$
 
 ### single-training-set VS case-control
 这两个词在PU问题中描述标注集和未标注集的来源/分布差异。
@@ -64,22 +65,40 @@ case-control表示标注集和无标签数据来源不同，其中无标签数�
 ### 先验分布 $\alpha$ 和标签频率 $c$ 的关系
 先验概率$\alpha = P(y=1)$和标签频率$c=P(s=1|y=1)$紧密相关，
 考虑到$P(s=1) = \frac{P(s=1,y=1)}{P(y=1|s=1)} = P(s=1,y=1)$, 标签频率可以化简为
-$$c 
+$$
+c
 = P(s=1|y=1) 
 = \frac{P(s=1, y=1)}{P(y=1)} 
-= \frac{P(s=1)}{P(y=1)}$$
+= \frac{P(s=1)}{P(y=1)}
+$$
+
 这里面$P(s=1)$可以通过计数的方式从PU数据集中进行统计。而$P(y=1)$需要分情况讨论：
 在single-training-set中，
-$$P(y=1) = \alpha$$ 
-$$c=\frac{P(s=1)}{\alpha}$$
+
+$$
+P(y=1) = \alpha
+$$
+
+$$
+c=\frac{P(s=1)}{\alpha}
+$$
+
 在case-control中，
+
 $$
 P(y=1) 
 = \sum P(y=1, s) 
 =  P(y=1|s=0)P(s=0) + P(y=1|s=1)P(s=1)
 $$
-$$P(y=1) = \alpha P(s=0) + P(s=1)$$
-$$\alpha = \frac{1-c}{c} \frac{P(s=1)}{1-P(s=1)}$$
+
+$$
+P(y=1) = \alpha P(s=0) + P(s=1)
+$$
+
+$$
+\alpha = \frac{1-c}{c} \frac{P(s=1)}{1-P(s=1)}
+$$
+
 这个角度看，先验概率与标签概率是PU learning中可以转换的。需要时，求取其中一个即可。
 
 ----
@@ -91,20 +110,32 @@ PU learning设定了数据框架，但是这仍然是一个比较宽泛的定义
 #### SCAR: Selected Completely At Random
 采用**完全随机**的方式在样本空间中采样，不受样本特征x影响。
 在问答拒识标注中，正样本集相当于从日志中随机抽取然后逐个标注获得。
-$$ P(s=1|x,y=1) = P(s=1|y=1) $$
-$$ e(x) = c $$ 
-$$ P(s=1|x) 
+$$
+P(s=1|x,y=1) = P(s=1|y=1)
+$$
+
+$$
+e(x) = c
+$$
+
+$$
+P(s=1|x)
 = P(s=1, y=1|x) 
 = e(x)P(y=1|x) 
-= cP(y=1|x)$$ 
-![](/post-images/1620448043161.png)
+= cP(y=1|x)
+$$
+
+![SCAR 假设下标注概率与真实正样本概率的关系示意图](/post-images/1620448043161.png)
 
 #### SAR: Selected At Random
 SAR是一个更通用的标签策略假设，针对样本特征x的选择策略导致标注集分布与真实标签分布存在采样偏差，是一种有偏采样。以propensity定义 $e(x) = P(s=1|x,y=1)$
-$$ P(s=1|x) 
-= e(x)P(y=1|x) $$ 
+$$
+P(s=1|x)
+= e(x)P(y=1|x)
+$$
+
 问答拒识标注中，问答日志有长有短，但是在标注数据前常根据句长等特征筛选去重等预处理。这样采集到的标注数据标签分布，和真实正样本标签分布就存在一定偏差bias。这也就引出了一个细分方向，学习一个unbiased classifier.
-![](/post-images/1620474783017.png)
+![SAR 假设下倾向得分与分类概率的关系示意图](/post-images/1620474783017.png)
 
 #### PG: Probabilistic Gap
 PG是一种SAR假设，在SAR假设基础上，PG假设真实正样本中的数据，如果与真实负样本数据越相似，被采样出来标注的概率越低。因此PG通过概率差定义一个标注难度 $\Delta P(x) = P(y=1|x) - P(y=0|x)=2P(y=1|x) - 1$，值越大说明越容易标注，越小说明约难以判断区分，更难标注。
@@ -119,15 +150,20 @@ PG是一种SAR假设，在SAR假设基础上，PG假设真实正样本中的数�
 - $\Delta \widetilde{P}(x)$ 与 $\Delta P(x)$ 存在排序关系上的一致性
     - $\Delta \widetilde{P}(x_1) = \Delta \widetilde{P}(x_2) \iff \Delta P(x_1)=\Delta P(x_2)$
     - $\Delta \widetilde{P}(x_1)<\Delta \widetilde{P}(x_2) \iff \Delta P(x_1)<\Delta P(x_2)$
-![](/post-images/1620474817388.png)
+![Probabilistic Gap 标注难度与概率差关系示意图](/post-images/1620474817388.png)
 
 ### 关于数据
 #### Negativity: 无标签数据都是负样本
 这个假设成立的场景比较少，但是如果成立，就使用一些流行的机器学习方法做有监督二分类
 #### Separability: 可分性假设
 可分性假设认为存在一个function $f(x) : \R ^n \rightarrow \R$，和阈值$\tau$, 使下式成立：
-$$ f(x_i) \geq \tau, y_i = 1 $$
-$$ f(x_i) < \tau, y_i = 0$$
+$$
+f(x_i) \geq \tau, y_i = 1
+$$
+
+$$
+f(x_i) < \tau, y_i = 0
+$$
 这个假设常常在two-step技术中使用。
 #### Smoothness: 平滑假设
 对于相似的两个样本$x_1$、$x_2$，其正样本概率$P(y=1|x_1)$、$P(y=1|x_2)$也相似
@@ -149,10 +185,12 @@ $$ f(x_i) < \tau, y_i = 0$$
 常用二分类评价指标 $F_1= \frac{2pr}{p+r}$，其中$p=P(y=1|y'=1)$, $r=P(y'=1|y=1)$。$y'$表示模型预测标签。
 如果SCAR假设成立，我们可以直接在正样本集上评价模型召回率 $r=P(y'=1|s=1)$。有学者以此假设为基础借助排序方案取topN并计算其中标注正样本比例来估算Precision和$F_1$，这个具体做法还要翻翻论文细节。
 此外, 求解PU learning的数据限制下直接计算$F_1$很难，学界提出了以下PU learning可计算的评价函数作为$F_1$的代理，其属性与$F_1$相同。
-$$\frac{pr}{P(y=1)} 
+$$
+\frac{pr}{P(y=1)}
 = \frac{pr^2}{rP(y=1)} 
 = \frac{P(y=1|y'=1)r^2}{P(y'=1, y=1)} 
-= \frac{r^2}{P(y'=1)}$$
+= \frac{r^2}{P(y'=1)}
+$$
 
 感慨一下自己的数理统计基础不好，😢论文中的假设验证G-test不太懂，等我后续研究下。(update：可以参考后续补充的博文**PU learning: 假设检验**)
 
@@ -177,18 +215,23 @@ $$\frac{pr}{P(y=1)}
 ### ROC方法
 ROC曲线在二分类问题中，以假阳率为x轴，真阳率为y轴根据不同的阈值在坐标上画点，连为曲线。
 其中：
-$$TPR 
+$$
+TPR
 = \frac{TP}{TP + FN} 
 = \frac{P(y'=1, y=1)}{P(y'=1, y=1) + P(y'=0, y=1)} 
 = P(y'=1|y=1)
 $$
-$$FPR
+
+$$
+FPR
 = \frac{FP}{FP + TN}
 = P(y'=1|y=0)
 $$
 优化的目标是最大化$TPR$和最小化$FPR$, 其中第一个$TPR$可以在标注数据上计算$P(y'=1|s=1)$，但$FPR$无法计算。
 从预测概率$P(y'=1) = \alpha P(y'=1|y=1) + (1 - \alpha) P(y'=1|y=0)$可以推导出如下等式:
-$$\frac{P(y'=1)}{P(y'=1|s=1)} = \alpha + (1 - \alpha) \frac{P(y'=1|y=0)}{P(y'=1|y=1)}$$
+$$
+\frac{P(y'=1)}{P(y'=1|s=1)} = \alpha + (1 - \alpha) \frac{P(y'=1|y=0)}{P(y'=1|y=1)}
+$$
 对于这样一个等式，从优化目标角度看，我们希望右边的第二部分趋近于0，使左边逐渐趋近于$\alpha$
 这样我们的优化目标可以重新写为 $max_f \frac{P(f=1)}{P(f=1|s=1)}$
 这个优化结果在不可精简假设这个比较松的假设下就可以成立，但是很难收敛。实践中，一般会在正样本锚集假设下设计这种类型的估算算法。
@@ -203,19 +246,41 @@ Two-step方法主要是基于可分性假设和平滑假设，即所有正样本
 - 识别可信负样本
 - 使用半监督/监督学习技术学习正样本和可信负样本
 - (optional)选择训练生成的最佳分类器 
-![](/post-images/1620634666975.png)
+![PU Learning Two-step 方法流程图](/post-images/1620634666975.png)
 
 ### biased learning
 这种方法把未标注数据看作带噪负样本进行优化。比较常见的方案是biased-SVM。
  如果不考虑正样本带噪问题，可以进行如下soft-SVM建模：
- $$Minimize: \frac{1}{2} w^T w + C \sum_{i=k}^{n} \zeta_i$$
- $$ \text{subject to} :w^T x_i + b \geq 1, i = 1,2,.., k-1$$
- $$-1(w^T x_i + b) \geq 1 - \zeta_i, i = k, k+1, ..., n$$
- $$\zeta_i \geq 0, i=k, k+1, ... n$$
+
+$$
+Minimize: \frac{1}{2} w^T w + C \sum_{i=k}^{n} \zeta_i
+$$
+
+$$
+\text{subject to} :w^T x_i + b \geq 1, i = 1,2,.., k-1
+$$
+
+$$
+-1(w^T x_i + b) \geq 1 - \zeta_i, i = k, k+1, ..., n
+$$
+
+$$
+\zeta_i \geq 0, i=k, k+1, ... n
+$$
+
 如果考虑正样本中可能也带噪音的情况，可以给positive errors与negative errors分别添加权重系数$C_+$和$C_-$:
- $$Minimize: \frac{1}{2} w^T w + C_+ \sum_{i=1}^{k-1} \zeta_i + C_- \sum_{i=k}^{n} \zeta_i$$
- $$ \text{subject to} : y_i (w^T x_i + b) \geq 1 - \zeta_i, i = 1,2,.., n$$
- $$\zeta_i \geq 0, i=1,2, ... n$$
+
+$$
+Minimize: \frac{1}{2} w^T w + C_+ \sum_{i=1}^{k-1} \zeta_i + C_- \sum_{i=k}^{n} \zeta_i
+$$
+
+$$
+\text{subject to} : y_i (w^T x_i + b) \geq 1 - \zeta_i, i = 1,2,.., n
+$$
+
+$$
+\zeta_i \geq 0, i=1,2, ... n
+$$
 
 一般会使用一个更大的$C_+$和一个更小的$C_-$，参数选择上一般是通过validation set来最终确定。
 
@@ -245,16 +310,28 @@ post-processing的预处理视角。从post-processing做法中发现：如果�
 #####  无标签数据打软标签
 08年一篇论文提出的方法
 还是先用PU数据训练一个模型拟合$P(s=1|x)$。然后使用如下公式打标, 最后训练模型预测$P(y=1|x)$
-$$P(y=1|s=0, x) = \frac{1-c}{c} \frac{P(s=1|x)}{1-P(s=1|x)}$$
+$$
+P(y=1|s=0, x) = \frac{1-c}{c} \frac{P(s=1|x)}{1-P(s=1|x)}
+$$
 
 ##### Empirical-Risk-minimization based: 基于最小化经验风险
 这个方法打算在最小化经验风险的框架内训练一个分类器解决PU问题。
 首先常用的二分类模型中，模型$g$的最小化风险写为
-$$R(g)=\alpha \mathbb{E}_{f_+}[L^+(g(x))] + (1 - \alpha) \mathbb{E}_{f_-}[L^-(g(x))]$$
+$$
+R(g)=\alpha \mathbb{E}_{f_+}[L^+(g(x))] + (1 - \alpha) \mathbb{E}_{f_-}[L^-(g(x))]
+$$
+
 借助$\mathbb{E}_f(L) = \alpha \mathbb{E}_{f_+}(L) + (1 - \alpha) \mathbb{E}_{f_-}(L)$
-$$R(g) = \alpha \mathbb{E}_{f_+}[L^+(g(x))] + \mathbb{E}_f[L^-(g(x))] - \alpha \mathbb{E}_{f_+}[L^-(g(x))]$$
+
+$$
+R(g) = \alpha \mathbb{E}_{f_+}[L^+(g(x))] + \mathbb{E}_f[L^-(g(x))] - \alpha \mathbb{E}_{f_+}[L^-(g(x))]
+$$
+
 上文标签机制中提到PU leaning场景下$f_l(x) = \frac{e(x)f_+(x)}{c}$，由此推得
-$$R(g) = \alpha \mathbb{E}_{f_l}[\frac{c}{e(x)}(L^+(g(x)) - L^-(g(x)))] + \mathbb{E}_f[L^-(g(x))]$$
+
+$$
+R(g) = \alpha \mathbb{E}_{f_l}[\frac{c}{e(x)}(L^+(g(x)) - L^-(g(x)))] + \mathbb{E}_f[L^-(g(x))]
+$$
 借助这个函数，我们可以在case-control与single-training-set两个场景下构造新的带权重数据集。
 
 在case-control类型的数据集中，我们可以自然得套用上式构建数据集：
@@ -265,7 +342,9 @@ $$R(g) = \alpha \mathbb{E}_{f_l}[\frac{c}{e(x)}(L^+(g(x)) - L^-(g(x)))] + \mathb
     - 标注数据，权重为$\frac{\alpha c}{|s=1| e(x)}$
 
 在single-trainig-set数据集中，引入上文提到可以将对真实数据得采样展开为标注数据采样和无标签数据采样 $x \sim \alpha c f_l(x) + (1 - \alpha c) f_u(x)$, 加入上之前得Risk函数中可得：
-$$R(g|x,s) = \frac{1}{|s|} \mathbb{E}_{f_l}(\frac{1}{e(x)}L^+(g(x)) + (1 - \frac{1}{e(x)}) L^-(g(x))) + \mathbb{E}_{f_u} L^-(g(x)))$$
+$$
+R(g|x,s) = \frac{1}{|s|} \mathbb{E}_{f_l}(\frac{1}{e(x)}L^+(g(x)) + (1 - \frac{1}{e(x)}) L^-(g(x))) + \mathbb{E}_{f_u} L^-(g(x)))
+$$
 
 这样把最外面得常数去掉，构造出一个带权重数据集：
 - 负样本：
@@ -310,4 +389,3 @@ UIC大学的Bing Liu教授是这个领域的开山鼻祖，东京大学的Masash
 - **Learning From Positive and Unlabeled Data: A Survey** Jessa Bekker · Jesse Davis
 
 Photo by <a href="https://unsplash.com/@zuizuii?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Duy Hoang</a> on <a href="https://unsplash.com/s/photos/shadow-dark?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-
