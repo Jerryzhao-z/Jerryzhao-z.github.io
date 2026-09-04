@@ -1,0 +1,20 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+interface Props { post: Post; }
+const { post } = Astro.props;
+---
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="shell article-shell">
+    <header class="article-header">
+      {post.data.series && <p class="eyebrow">系列 · {post.data.series}{post.data.seriesOrder ? ` ${post.data.seriesOrder}` : ''}</p>}
+      <h1>{post.data.title}</h1><p class="article-lede">{post.data.description}</p>
+      <div class="post-meta"><time datetime={post.data.publishedAt.toISOString()}>发布于 {formatDate(post.data.publishedAt)}</time>{post.data.updatedAt && <time datetime={post.data.updatedAt.toISOString()}>更新于 {formatDate(post.data.updatedAt)}</time>}</div>
+      {post.data.tags.length > 0 && <ul class="tag-list" aria-label="记录标签">{post.data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+    </header>
+    {post.data.cover && <img class="post-cover" src={post.data.cover} alt="" />}
+    <div class="prose"><slot /></div>
+    <footer class="article-footer"><a href="/blog/">← 返回记录列表</a></footer>
+  </article>
+</BaseLayout>

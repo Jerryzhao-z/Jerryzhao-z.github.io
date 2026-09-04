@@ -1,0 +1,21 @@
+---
+title: MDX 作为可交互文章的入口
+description: 验证 MDX 组件入口，并说明何时才值得增加客户端交互。
+publishedAt: 2026-09-02
+tags: [MDX, 工程实践]
+series: 学习方法
+seriesOrder: 2
+draft: true
+---
+
+import Aside from '../../components/Aside.astro';
+
+普通文章优先使用 Markdown。只有当图表、推导步骤或实验参数确实需要读者操作时，才引入客户端组件。
+
+<Aside title="静态优先">
+  MDX 可以组合组件，但组件默认仍在构建期输出 HTML。只有显式添加 `client:*` 指令时，浏览器才会加载交互脚本。
+</Aside>
+
+## 一个判断标准
+
+如果交互不能帮助读者验证一个假设，就先用表格、图或简短代码说明。这样能让页面更快，也让内容更容易长期维护。

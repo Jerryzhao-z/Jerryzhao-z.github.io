@@ -1,0 +1,21 @@
+---
+const currentPath = Astro.url.pathname;
+const links = [
+  { href: '/', label: '首页' },
+  { href: '/blog/', label: '文章' },
+  { href: '/places/', label: '足迹' },
+  { href: '/about/', label: '关于' },
+];
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="Jerry 首页">
+      Jerry
+    </a>
+    <nav aria-label="主导航"><ul>{links.map(({ href, label }) => {
+      const active = href === '/' ? currentPath === href : currentPath.startsWith(href);
+      return <li><a href={href} aria-current={active ? 'page' : undefined}>{label}</a></li>;
+    })}</ul></nav>
+  </div>
+</header>
